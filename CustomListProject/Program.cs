@@ -11,6 +11,10 @@ namespace CustomListProject
         static void Main(string[] args)
         {
             CustomList<int> list = new CustomList<int>();
+
+            int = 0;
+
+            list.AddItem(int 0, list);
         }
     }
 }

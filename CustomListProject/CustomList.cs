@@ -12,11 +12,11 @@ namespace CustomListProject
         private int capacity;
         public T[] items;
 
-        public CustomList()
+        public CustomList(int initialCapacity)
         {
-            items = new T[4];
+            items = new T[initialCapacity];
             count = 0;
-            capacity = 4;
+            capacity = initialCapacity;
         }
 
         public int Count
@@ -47,13 +47,22 @@ namespace CustomListProject
             }
         }
 
-        public void AddItem(T item, CustomList<T> items)
+        public void AddItem(T item)
         {
-            T[] tempList = new T[items.Capacity]; 
-            if(items.Count >= items.Capacity)
+            T[] tempList = new T[capacity *= 2]; 
+            if(Count >= Capacity)
             {
-                tempList = items;
+                for (int i = 0; i < Capacity - 1; i++)
+                {
+                    tempList[i] = items[i];
+                }
+                items = tempList;
 
+                
+            }
+            else
+            {
+                items[Count + 1] = item;
             }
         }
 

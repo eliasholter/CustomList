@@ -12,7 +12,7 @@ namespace ArrayTest
         [ExpectedException(typeof(IndexOutOfRangeException))]
         public void Indexer_IndexRequestedOutsideOfRange_ExceptionThrown()
         {
-            CustomList<int> testList = new CustomList<int>();
+            CustomList<int> testList = new CustomList<int>(4);
 
             int indexToCheck = testList[5];
         }
@@ -20,7 +20,7 @@ namespace ArrayTest
         [TestMethod]
         public void Indexer_CheckIndex_ReturnsValueThatWasRequested()
         {
-            CustomList<int> testList = new CustomList<int>();
+            CustomList<int> testList = new CustomList<int>(4);
             int newListItem = 3;
             int expected = newListItem;
 
@@ -34,7 +34,7 @@ namespace ArrayTest
         [TestMethod]
         public void Add_AddItemToList_CountIncreases()
         {
-            CustomList<int> testList = new CustomList<int>();
+            CustomList<int> testList = new CustomList<int>(4);
             int newListItem = 3;
             int expected = 1;
             int actual;
@@ -47,7 +47,7 @@ namespace ArrayTest
         [TestMethod]
         public void Add_AddItemToListWithNoMoreCapacity_ContainsEntireOriginalList()
         {
-            CustomList<int> testList = new CustomList<int>();
+            CustomList<int> testList = new CustomList<int>(4);
             int newListItem = 3;
             int expected = 5;
             int actual;
@@ -65,7 +65,7 @@ namespace ArrayTest
         [TestMethod]
         public void Add_AddItemToListWithNoMoreCapacity_MaintainsOriginalListOrder()
         {
-            CustomList<int> testList = new CustomList<int>();
+            CustomList<int> testList = new CustomList<int>(4);
             int itemOne = 1;
             int itemTwo = 2;
             int itemThree = 3;
@@ -80,13 +80,13 @@ namespace ArrayTest
             testList.AddItem(itemFive);
             int actual = testList.Count;
 
-            Assert.AreEqual(expected, );
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
         public void Add_AddItemToListWithNoMoreCapacity_CapacityDoubles()
         {
-            CustomList<int> testList = new CustomList<int>();
+            CustomList<int> testList = new CustomList<int>(4);
             int newListItem = 3;
             int expected = testList.Capacity * 2;
 
@@ -94,19 +94,19 @@ namespace ArrayTest
             {
                 testList.AddItem(newListItem);
             }
+            int actual = testList.Capacity;
 
-            Assert.AreEqual(expected, testList.Capacity);
+            Assert.AreEqual(expected, actual);
         }
 
-        //[TestMethod]
-        //[ExpectedException(typeof(InvalidCastException))]
-        //public void Add_AddItemToListOfIncompatibleType_ExceptionThrown()
-        //{
-        //    CustomList<string> testList = new CustomList<string>();
-        //    int newListItem = 3;
+        [TestMethod]
+        [ExpectedException(typeof(InvalidCastException))]
+        public void Add_AddItemToListOfIncompatibleType_ExceptionThrown()
+        {
+            CustomList<string> testList = new CustomList<string>(4);
+            int newListItem = 3;
 
-        //    testList.AddItem(newListItem);
-        //    //Assert.ThrowsException(typeof(ArrayTypeMismatchException);
-        //}
+            testList.AddItem(newListItem);
+        }
     }
 }
