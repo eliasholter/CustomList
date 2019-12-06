@@ -8,25 +8,53 @@ namespace CustomListProject
 {
     public class CustomList<T>
     {
-        T[] list;
-        public int count;
-        public int capacity;
+        private int count;
+        private int capacity;
+        public T[] items;
 
         public CustomList()
         {
-            list = new T[4];
+            items = new T[4];
             count = 0;
             capacity = 4;
         }
 
-        public void Indexer()
+        public int Count
         {
-
+            get
+            {
+                return count;
+            }
         }
 
-        public void AddItem(T item)
+        public int Capacity
         {
+            get
+            {
+                return capacity;
+            }
+        }
 
+        public T this[int i]
+        {
+            get
+            {
+                return items[i];
+            }
+            set
+            {
+                items[i] = value;
+            }
+        }
+
+        public void AddItem(T item, CustomList<T> items)
+        {
+            T[] tempList = new T[items.Capacity]; 
+            if(items.Count >= items.Capacity)
+            {
+                tempList = items;
+
+            }
         }
 
         public void RemoveItem(T item)
@@ -34,9 +62,11 @@ namespace CustomListProject
 
         }
 
-        public void ToString()
+        public override string ToString()
         {
+            string listToString = "hello";
 
+            return listToString;
         }
 
         public void ZipLists()
