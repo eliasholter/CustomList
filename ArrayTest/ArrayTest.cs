@@ -302,48 +302,51 @@ namespace ArrayTest
             Assert.AreEqual(expected, actual);
         }
 
-        // Subtraction Operator Tests
+        //Subtraction Operator Tests
+       [TestMethod]
+        public void OverrideSubtractionOperator_SubtractOneListFromAnother_CountEqualsOriginalCountMinusNumberOfItemsRemoved()
+        {
+            CustomList<int> testListOne = new CustomList<int>(4);
+            CustomList<int> testListTwo = new CustomList<int>(4);
+            CustomList<int> finalList = new CustomList<int>(4);
+            testListOne.AddItem(1);
+            testListOne.AddItem(3);
+            testListOne.AddItem(5);
+            testListTwo.AddItem(2);
+            testListTwo.AddItem(3);
+            testListTwo.AddItem(6);
+            int expected = 2;
+
+            finalList = testListOne - testListTwo;
+            int actual = finalList.Count;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void OverrideSubtractionOperator_SubtractOneListFromAnother_FinalListIsInOrder()
+        {
+            CustomList<int> testListOne = new CustomList<int>(4);
+            CustomList<int> testListTwo = new CustomList<int>(4);
+            CustomList<int> finalList = new CustomList<int>(4);
+            testListOne.AddItem(1);
+            testListOne.AddItem(3);
+            testListOne.AddItem(5);
+            testListTwo.AddItem(2);
+            testListTwo.AddItem(1);
+            testListTwo.AddItem(3);
+            testListOne.AddItem(7);
+            testListTwo.AddItem(5);
+            string expected = "7 ";
+
+            finalList = testListOne - testListTwo;
+            string actual = finalList.ToString();
+
+            Assert.AreEqual(expected, actual);
+        }
+
         //[TestMethod]
-        //public void OverrideSubtractionOperator_SubtractOneListFromAnother_CountEqualsOriginalCountMinusNumberOfItemsRemoved()
-        //{
-        //    CustomList<int> testListOne = new CustomList<int>(4);
-        //    CustomList<int> testListTwo = new CustomList<int>(4);
-        //    CustomList<int> finalList = new CustomList<int>(4);
-        //    testListOne.AddItem(1);
-        //    testListOne.AddItem(3);
-        //    testListOne.AddItem(5);
-        //    testListTwo.AddItem(2);
-        //    testListTwo.AddItem(3);
-        //    testListTwo.AddItem(6);
-        //    int expected = 5;
-
-        //    finalList = testListOne - testListTwo;
-        //    int actual = finalList.Count;
-
-        //    Assert.AreEqual(expected, actual);
-        //}
-
-        //[TestMethod]
-        //public void OverrideSubtractionOperator_SubtractOneListFromAnother_FinalListIsInOrder()
-        //{
-        //    CustomList<int> testListOne = new CustomList<int>(4);
-        //    CustomList<int> testListTwo = new CustomList<int>(4);
-        //    CustomList<int> finalList = new CustomList<int>(4);
-        //    testListOne.AddItem(1);
-        //    testListOne.AddItem(3);
-        //    testListOne.AddItem(5);
-        //    testListTwo.AddItem(2);
-        //    testListTwo.AddItem(1);
-        //    testListTwo.AddItem(3);
-        //    testListOne.AddItem(7);
-        //    testListTwo.AddItem(5);
-        //    string expected = "7 2 ";
-
-        //    finalList = testListOne - testListTwo;
-        //    string actual = finalList.ToString();
-
-        //    Assert.AreEqual(expected, actual);
-        //}
+        //public void OverrideSubtractionOperator_SubtractOneListFromAnotherWithDuplicatesInTheData_
 
         // Zip Method Tests
         [TestMethod]

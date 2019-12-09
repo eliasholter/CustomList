@@ -133,6 +133,16 @@ namespace CustomListProject
             return tempList;
         }
 
+        public static CustomList<T> operator -(CustomList<T> listOne, CustomList<T> listTwo)
+        {
+
+            for(int i = 0; i < listTwo.Count; i++)
+            {
+               listOne.RemoveItem(listTwo[i]);
+            }
+
+            return listOne;
+        }
 
         public void ZipLists(CustomList<T> listOne, CustomList<T> listTwo)
         {
