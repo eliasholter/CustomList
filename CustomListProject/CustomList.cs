@@ -118,27 +118,15 @@ namespace CustomListProject
 
         public static CustomList<T> operator +(CustomList<T> listOne, CustomList<T> listTwo)
         {
-            CustomList<T> tempList;
+            CustomList<T> tempList = new CustomList<T>(4);
 
-            if (listOne.capacity > listTwo.capacity)
+            for (int i = 0; i < listOne.Count; i++)
             {
-                tempList = new CustomList<T>(listOne.capacity * 2);
+                tempList.AddItem(listOne[i]);
             }
-            else
+            for (int j = 0; j < listTwo.Count; j++)
             {
-                tempList = new CustomList<T>(listTwo.capacity * 2);
-            }
-
-            int i = 0;
-            for (; i < listOne.Count; i++)
-            {
-                tempList[i] = listOne[i];
-                tempList.count++;
-            }
-            for (int j = 0; j < listTwo.Count; j++, i++)
-            {
-                tempList[i] = listTwo[j];
-                tempList.count++;
+                tempList.AddItem(listTwo[j]);
             }
 
 
