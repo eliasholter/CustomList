@@ -17,6 +17,8 @@ namespace CustomListProject
             list.AddItem(2);
             list.AddItem(3);
             list.AddItem(4);
+
+            list.RemoveItem(3);
         }
     }
 }

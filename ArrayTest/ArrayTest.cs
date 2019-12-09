@@ -110,6 +110,54 @@ namespace ArrayTest
         //}
 
         // Remove Method Tests
+        [TestMethod]
+        public void Remove_RemoveItemFromList_CountDecreases()
+        {
+            CustomList<int> testList = new CustomList<int>();
+            int expected = 1;
+            int actual;
+
+            testList.AddItem(3);
+            testList.AddItem(2);
+            testList.RemoveItem(3);
+            actual = testList.Count;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Remove_RemoveItemFromList_DoesNotContainThree()
+        {
+            CustomList<int> testList = new CustomList<int>();
+            int expected = 2;
+            int actual;
+
+            testList.AddItem(3);
+            testList.AddItem(2);
+            testList.AddItem(1);
+            testList.AddItem(4);
+            testList.RemoveItem(3);
+            actual = testList[0];
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Remove_RemoveItemFromList_MovesEntriesDownSoThereAreNoGaps()
+        {
+            CustomList<int> testList = new CustomList<int>();
+            int expected = 4;
+            int actual;
+
+            testList.AddItem(3);
+            testList.AddItem(2);
+            testList.AddItem(1);
+            testList.AddItem(4);
+            testList.RemoveItem(1);
+            actual = testList[2];
+
+            Assert.AreEqual(expected, actual);
+        }
 
 
         // ToString Override Method Tests
@@ -188,6 +236,46 @@ namespace ArrayTest
             Assert.AreEqual(expected, actual);
         }
 
-        // 
+        // Zip Method Tests
+        [TestMethod]
+        public void ZipLists_ZipListsTogether_CountEqualsSumOfTwoPreviousListCounts()
+        {
+            CustomList<int> testListOne = new CustomList<int>();
+            CustomList<int> testListTwo = new CustomList<int>();
+            CustomList<int> finalList = new CustomList<int>();
+            testListOne.AddItem(1);
+            testListOne.AddItem(3);
+            testListOne.AddItem(5);
+            testListTwo.AddItem(2);
+            testListTwo.AddItem(4);
+            testListTwo.AddItem(6);
+            int expected = 6;
+
+            finalList.ZipLists(testListOne, testListTwo);
+            int actual = finalList.Count;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ZipLists_ZipListsTogether_ContainsContentsofBothOldListsInterlacedInOrder()
+        {
+            CustomList<int> testListOne = new CustomList<int>();
+            CustomList<int> testListTwo = new CustomList<int>();
+            CustomList<int> finalList = new CustomList<int>();
+            string expected = "1 2 3 4 5 6 ";
+            testListOne.AddItem(1);
+            testListOne.AddItem(3);
+            testListOne.AddItem(5);
+            testListTwo.AddItem(2);
+            testListTwo.AddItem(4);
+            testListTwo.AddItem(6);
+
+            finalList.ZipLists(testListOne, testListTwo);
+
+            string actual = finalList.ToString();
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
