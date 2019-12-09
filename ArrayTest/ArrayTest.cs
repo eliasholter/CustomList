@@ -99,15 +99,15 @@ namespace ArrayTest
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArrayTypeMismatchException))]
-        public void Add_AddItemToListOfIncompatibleType_ExceptionThrown()
-        {
-            CustomList<int> testList = new CustomList<int>();
-            var newListItem = "3";
+        //[TestMethod]
+        //[ExpectedException(typeof(ArrayTypeMismatchException))]
+        //public void Add_AddItemToListOfIncompatibleType_ExceptionThrown()
+        //{
+        //    CustomList<int> testList = new CustomList<int>();
+        //    var newListItem = "3";
 
-            testList.AddItem(newListItem);
-        }
+        //    testList.AddItem(newListItem);
+        //}
 
         // Remove Method Tests
 
@@ -136,7 +136,7 @@ namespace ArrayTest
             testList.AddItem(.5);
             testList.AddItem(.75);
             testList.AddItem(.99);
-            string expected = ".25 .5 .75 .99 ";
+            string expected = "0.25 0.5 0.75 0.99 ";
 
             string actual = testList.ToString();
 
@@ -151,7 +151,7 @@ namespace ArrayTest
             testList.AddItem(false);
             testList.AddItem(true);
             testList.AddItem(false);
-            string expected = "true false true false ";
+            string expected = "True False True False ";
 
             string actual = testList.ToString();
 
@@ -166,7 +166,7 @@ namespace ArrayTest
             testList.AddItem(40);
             testList.AddItem(60);
             testList.AddItem(254);
-            string expected = "true false true false ";
+            string expected = "25 40 60 254 ";
 
             string actual = testList.ToString();
 
@@ -187,5 +187,7 @@ namespace ArrayTest
 
             Assert.AreEqual(expected, actual);
         }
+
+        // 
     }
 }

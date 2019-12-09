@@ -81,6 +81,11 @@ namespace CustomListProject
         {
             string newString = "";
 
+            for(int i = 0; i < Count; i++)
+            {
+                newString = newString + items[i].ToString() + " ";
+            }
+
             return newString;
         }
 
