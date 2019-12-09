@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CustomListProject
 {
-    public class CustomList<T>
+    public class CustomList<T> : IEnumerable
     {
         private int count;
         private int capacity;
@@ -74,30 +75,29 @@ namespace CustomListProject
             items = tempList;
         }
 
-        public void RemoveItem(T item)
+        public bool RemoveItem(T item)
         {
-            int i = 0;
             int j = 0;
+            bool itemFound = false;
             T[] tempList = new T[capacity];
 
-            while(!EqualityComparer<T>.Default.Equals(items[j], item)) 
+            for(int i = 0; i < Count; i++)
             {
-                tempList[i] = items[j];
-                i++;
-                j++;
-            }
+                if(!EqualityComparer<T>.Default.Equals(items[i], item))
+                {
+                    tempList[j] = items[i];
+                    j++;
+                }
+                else
+                {
+                    count -= 1;
+                    itemFound = true;
+                }
 
-            j++;
-
-            while (j < Count)
-            {
-                tempList[i] = items[j];
-                i++;
-                j++;
             }
 
             items = tempList;
-            count -= 1;
+            return itemFound;
         }
 
         public override string ToString()
@@ -162,6 +162,14 @@ namespace CustomListProject
 
             items = tempList;
             count = listOne.Count + listTwo.Count;
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            for(int i = 0; i < Count; i++)
+            {
+                yield return items[i];
+            }
         }
     }
 }

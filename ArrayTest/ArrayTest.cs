@@ -146,18 +146,20 @@ namespace ArrayTest
         public void Remove_RemoveItemFromList_MovesEntriesDownSoThereAreNoGaps()
         {
             CustomList<int> testList = new CustomList<int>();
-            int expected = 4;
+            int expected = 10;
             int actual;
 
             testList.AddItem(3);
             testList.AddItem(2);
             testList.AddItem(1);
             testList.AddItem(4);
-            testList.RemoveItem(1);
-            actual = testList[2];
+            testList.RemoveItem(20);
+            actual = testList[0] + testList[1] + testList[2] + testList[3];
 
             Assert.AreEqual(expected, actual);
         }
+
+
 
 
         // ToString Override Method Tests

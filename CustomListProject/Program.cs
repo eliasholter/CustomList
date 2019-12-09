@@ -19,6 +19,12 @@ namespace CustomListProject
             list.AddItem(4);
 
             list.RemoveItem(3);
+
+            foreach(int item in list)
+            {
+                Console.WriteLine(item);
+            }
+            Console.ReadLine();
         }
     }
 }
