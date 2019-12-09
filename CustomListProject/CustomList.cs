@@ -13,11 +13,11 @@ namespace CustomListProject
         private int capacity;
         public T[] items;
 
-        public CustomList()
+        public CustomList(int originalCapacity)
         {
-            items = new T[4];
+            items = new T[originalCapacity];
             count = 0;
-            capacity = 4;
+            capacity = originalCapacity;
         }
 
         public int Count
@@ -90,10 +90,14 @@ namespace CustomListProject
                 }
                 else
                 {
-                    count -= 1;
                     itemFound = true;
                 }
 
+            }
+
+            if(itemFound == true)
+            {
+                count -= 1;
             }
 
             items = tempList;
@@ -111,6 +115,36 @@ namespace CustomListProject
 
             return newString;
         }
+
+        public static CustomList<T> operator +(CustomList<T> listOne, CustomList<T> listTwo)
+        {
+            CustomList<T> tempList;
+
+            if (listOne.capacity > listTwo.capacity)
+            {
+                tempList = new CustomList<T>(listOne.capacity * 2);
+            }
+            else
+            {
+                tempList = new CustomList<T>(listTwo.capacity * 2);
+            }
+
+            int i = 0;
+            for (; i < listOne.Count; i++)
+            {
+                tempList[i] = listOne[i];
+                tempList.count++;
+            }
+            for (int j = 0; j < listTwo.Count; j++, i++)
+            {
+                tempList[i] = listTwo[j];
+                tempList.count++;
+            }
+
+
+            return tempList;
+        }
+
 
         public void ZipLists(CustomList<T> listOne, CustomList<T> listTwo)
         {
