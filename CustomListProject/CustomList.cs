@@ -12,11 +12,11 @@ namespace CustomListProject
         private int capacity;
         public T[] items;
 
-        public CustomList(int initialCapacity)
+        public CustomList()
         {
-            items = new T[initialCapacity];
+            items = new T[4];
             count = 0;
-            capacity = initialCapacity;
+            capacity = 4;
         }
 
         public int Count
@@ -49,21 +49,27 @@ namespace CustomListProject
 
         public void AddItem(T item)
         {
-            T[] tempList = new T[capacity *= 2]; 
             if(Count >= Capacity)
             {
-                for (int i = 0; i < Capacity - 1; i++)
-                {
-                    tempList[i] = items[i];
-                }
-                items = tempList;
-
-                
+                NeedsDoubleCapacity(item);
             }
             else
             {
-                items[Count + 1] = item;
+                items[Count] = item;
+                count += 1;
             }
+        }
+
+        public void NeedsDoubleCapacity(T item)
+        {
+            T[] tempList = new T[capacity *= 2];
+            for (int i = 0; i < Count - 1; i++)
+            {
+                tempList[i] = items[i];
+            }
+            tempList[Count + 1] = item;
+            count += 1;
+            items = tempList;
         }
 
         public void RemoveItem(T item)
@@ -73,9 +79,9 @@ namespace CustomListProject
 
         public override string ToString()
         {
-            string listToString = "hello";
+            string newString = "";
 
-            return listToString;
+            return newString;
         }
 
         public void ZipLists()

@@ -12,9 +12,11 @@ namespace CustomListProject
         {
             CustomList<int> list = new CustomList<int>();
 
-            int = 0;
-
-            list.AddItem(int 0, list);
+            list.AddItem(0);
+            list.AddItem(1);
+            list.AddItem(2);
+            list.AddItem(3);
+            list.AddItem(4);
         }
     }
 }
