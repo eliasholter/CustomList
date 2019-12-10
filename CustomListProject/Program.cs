@@ -13,7 +13,6 @@ namespace CustomListProject
             CustomList<int> listOne = new CustomList<int>(4);
             CustomList<int> listTwo = new CustomList<int>(4);
             CustomList<int> newList;
-            CustomList<int> list = new CustomList<int>(4) { 1, 2, 3, 4 };
 
             listOne.Add(1);
             listOne.Add(3);

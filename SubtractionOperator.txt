@@ -1,0 +1,28 @@
+Syntax: 
+	public static CustomList<T> operator -(CustomList<T> listOne, CustomList<T> listTwo)
+
+Parameters:
+	listOne, listTwo  CustomList<T>
+listOne - The list that items are being removed from
+listTwo - The list of items that are being removed from listOne
+
+Return Type:
+	CustomList<T>
+Returns a list that doesn’t have any of the removed items and has all of the items pushed as close to the 0 index of the underlying array as possible.
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            CustomList<int> listOne = new CustomList<int>(4) { 1, 3, 5 };
+            CustomList<int> listTwo = new CustomList<int>(4) {  2, 3, 6};
+
+            listOne = listOne - listTwo;
+
+            Console.WriteLine(listOne);
+            Console.ReadLine();
+        }
+    }
+
+// Will print “1 5” to the console
