@@ -75,7 +75,7 @@ namespace ArrayTest
         public void Add_AddItemToListWithNoMoreCapacity_MaintainsOriginalListOrder()
         {
             CustomList<int> testList = new CustomList<int>(4);
-            string expected = "1 2 3 4 5 ";
+            string expected = "12345";
 
             testList.Add(1);
             testList.Add(2);
@@ -102,16 +102,6 @@ namespace ArrayTest
 
             Assert.AreEqual(expected, actual);
         }
-
-        //[TestMethod]
-        //[ExpectedException(typeof(ArrayTypeMismatchException))]
-        //public void Add_AddItemToListOfIncompatibleType_ExceptionThrown()
-        //{
-        //    CustomList<int> testList = new CustomList<int>();
-        //    var newListItem = "3";
-
-        //    testList.AddItem(newListItem);
-        //}
 
         // Remove Method Tests
         [TestMethod]
@@ -155,7 +145,7 @@ namespace ArrayTest
         public void Remove_RemoveItemFromList_MovesEntriesDownSoThereAreNoGaps()
         {
             CustomList<int> testList = new CustomList<int>(4) { 3, 2, 1, 4 };
-            string expected = "3 1 4 ";
+            string expected = "314";
 
             testList.Remove(2);
             string actual = testList.ToString();
@@ -167,7 +157,7 @@ namespace ArrayTest
         public void Remove_RemoveItemFromList_DoesNotRemoveAnything()
         {
             CustomList<int> testList = new CustomList<int>(4) { 1, 2, 3, 4 };
-            string expected = "1 2 3 4 ";
+            string expected = "1234";
 
             testList.Remove(5);
             string actual = testList.ToString();
@@ -179,8 +169,8 @@ namespace ArrayTest
         [TestMethod]
         public void RemoveAt_RemoveItemAtIndexOutsideOfRangeFromList_NothingWillBeRemoved()
         {
-            CustomList<int> testList = new CustomList<int>(4) { 1, 2, 3, 4 };
-            string expected = "1 2 3 4 ";
+            CustomList<int> testList = new CustomList<int>() { 1, 2, 3, 4 };
+            string expected = "1234";
 
             testList.RemoveAt(4);
             string actual = testList.ToString();
@@ -204,7 +194,7 @@ namespace ArrayTest
         public void RemoveAt_RemoveItemAtIndexFromList_RemoveOnlyItemAtIndex()
         {
             CustomList<int> testList = new CustomList<int>(4) { 1, 2, 3, 4 };
-            string expected = "1 2 4 ";
+            string expected = "124";
 
             testList.RemoveAt(2);
             string actual = testList.ToString();
@@ -241,7 +231,7 @@ namespace ArrayTest
         public void ToString_ConvertsIntegerArrayToString_ContainsEntireList()
         {
             CustomList<int> testList = new CustomList<int>(4) { 1, 2, 3, 4 };
-            string expected = "1 2 3 4 ";
+            string expected = "1234";
            
             string actual = testList.ToString();
 
@@ -252,7 +242,7 @@ namespace ArrayTest
         public void ToString_ConvertsDoubleArrayToString_ContainsEntireList()
         {
             CustomList<double> testList = new CustomList<double>(4) { .25, .5, .75, .99 };
-            string expected = "0.25 0.5 0.75 0.99 ";
+            string expected = "0.250.50.750.99";
 
             string actual = testList.ToString();
 
@@ -263,7 +253,7 @@ namespace ArrayTest
         public void ToString_ConvertsBooleanArrayToString_ContainsEntireList()
         {
             CustomList<bool> testList = new CustomList<bool>(4) { true, false, true, false };
-            string expected = "True False True False ";
+            string expected = "TrueFalseTrueFalse";
 
             string actual = testList.ToString();
 
@@ -274,7 +264,7 @@ namespace ArrayTest
         public void ToString_ConvertsByteArrayToString_ContainsEntireList()
         {
             CustomList<byte> testList = new CustomList<byte>(4) { 25, 40, 60, 254 };
-            string expected = "25 40 60 254 ";
+            string expected = "254060254";
 
             string actual = testList.ToString();
 
@@ -285,7 +275,7 @@ namespace ArrayTest
         public void ToString_ConvertsCharArrayToString_ContainsEntireList()
         {
             CustomList<char> testList = new CustomList<char>(4) { 'a', 'b', 'c', 'd' };
-            string expected = "a b c d ";
+            string expected = "abcd";
 
             string actual = testList.ToString();
 
@@ -324,7 +314,7 @@ namespace ArrayTest
             CustomList<int> testListOne = new CustomList<int>(4) { 1, 3, 5, 7 };
             CustomList<int> testListTwo = new CustomList<int>(4) { 2, 4, 6, 8 };
             CustomList<int> finalList = new CustomList<int>(4);
-            string expected = "1 3 5 7 2 4 6 8 ";
+            string expected = "13572468";
 
             finalList = testListOne + testListTwo;
             string actual = finalList.ToString();
@@ -367,7 +357,7 @@ namespace ArrayTest
             CustomList<int> testListOne = new CustomList<int>(4) { 1, 3, 5, 7 };
             CustomList<int> testListTwo = new CustomList<int>(4) { 2, 1, 3, 5 };
             CustomList<int> finalList = new CustomList<int>(4);
-            string expected = "7 ";
+            string expected = "7";
 
             finalList = testListOne - testListTwo;
             string actual = finalList.ToString();
@@ -381,7 +371,7 @@ namespace ArrayTest
             CustomList<int> testListOne = new CustomList<int>(4) { 1, 3, 5 };
             CustomList<int> testListTwo = new CustomList<int>(4) { 2, 4, 6 };
             CustomList<int> finalList = new CustomList<int>(4);
-            string expected = "1 3 5 ";
+            string expected = "135";
 
             finalList = testListOne - testListTwo;
             string actual = finalList.ToString();
@@ -395,7 +385,7 @@ namespace ArrayTest
             CustomList<int> testListOne = new CustomList<int>(4) { 1, 3, 1, 7 };
             CustomList<int> testListTwo = new CustomList<int>(4) { 2, 1, 3, 5 };
             CustomList<int> finalList = new CustomList<int>(4);
-            string expected = "1 7 ";
+            string expected = "17";
 
             finalList = testListOne - testListTwo;
             string actual = finalList.ToString();
@@ -409,7 +399,6 @@ namespace ArrayTest
         {
             CustomList<int> testListOne = new CustomList<int>(4);
             CustomList<int> testListTwo = new CustomList<int>(4);
-            CustomList<int> finalList = new CustomList<int>(4);
             testListOne.Add(1);
             testListOne.Add(3);
             testListOne.Add(5);
@@ -418,8 +407,8 @@ namespace ArrayTest
             testListTwo.Add(6);
             int expected = 6;
 
-            finalList.ZipLists(testListOne, testListTwo);
-            int actual = finalList.Count;
+            testListOne.ZipLists(testListTwo);
+            int actual = testListOne.Count;
 
             Assert.AreEqual(expected, actual);
         }
@@ -429,8 +418,7 @@ namespace ArrayTest
         {
             CustomList<int> testListOne = new CustomList<int>(4);
             CustomList<int> testListTwo = new CustomList<int>(4);
-            CustomList<int> finalList = new CustomList<int>(4);
-            string expected = "1 2 3 4 5 6 ";
+            string expected = "123456";
             testListOne.Add(1);
             testListOne.Add(3);
             testListOne.Add(5);
@@ -438,9 +426,9 @@ namespace ArrayTest
             testListTwo.Add(4);
             testListTwo.Add(6);
 
-            finalList.ZipLists(testListOne, testListTwo);
+            testListOne.ZipLists(testListTwo);
 
-            string actual = finalList.ToString();
+            string actual = testListOne.ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -450,7 +438,6 @@ namespace ArrayTest
         {
             CustomList<int> testListOne = new CustomList<int>(4);
             CustomList<int> testListTwo = new CustomList<int>(4);
-            CustomList<int> finalList = new CustomList<int>(4);
             testListOne.Add(1);
             testListOne.Add(3);
             testListOne.Add(5);
@@ -460,8 +447,8 @@ namespace ArrayTest
             testListTwo.Add(9);
             int expected = testListTwo.Capacity*2;
 
-            finalList.ZipLists(testListOne, testListTwo);
-            int actual = finalList.Capacity;
+            testListOne.ZipLists(testListTwo);
+            int actual = testListOne.Capacity;
 
             Assert.AreEqual(expected, actual);
         }
@@ -471,7 +458,6 @@ namespace ArrayTest
         {
             CustomList<int> testListOne = new CustomList<int>(4);
             CustomList<int> testListTwo = new CustomList<int>(4);
-            CustomList<int> finalList = new CustomList<int>(4);
             testListOne.Add(1);
             testListOne.Add(3);
             testListOne.Add(5);
@@ -481,35 +467,35 @@ namespace ArrayTest
             testListTwo.Add(9);
             testListTwo.Add(69);
             testListTwo.Add(101);
-            string expected = "1 2 3 4 5 6 9 69 101 ";
+            string expected = "123456969101";
 
-            finalList.ZipLists(testListOne, testListTwo);
-            string actual = finalList.ToString();
+            testListOne.ZipLists(testListTwo);
+            string actual = testListOne.ToString();
 
             Assert.AreEqual(expected, actual);
         }
 
         // FindAll Method Tests
         [TestMethod]
-        public void FindAll_SearchForSpecifiedItem_ReturnsArrayOfMatchingItems()
+        public void FindAll_SearchForSpecifiedItem_ReturnsArrayOfCorrectLength()
         {
-            CustomList<int> testList = new CustomList<int>(4) { 3, 2, 3, 4};
-            int[] expected = new int[] { 3, 3};
+            CustomList<int> testList = new CustomList<int>() { 3, 2, 3, 4};
+            int expected = 2;
 
-            int[] actual = testList.FindAll(3);
+            int actual = testList.FindAll(3).Count;
 
-            CollectionAssert.AreEqual(expected, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
-        public void FindAll_SearchForSpecifiedItem_ReturnsEmptyArray()
+        public void FindAll_SearchForSpecifiedItem_ReturnsArrayWithCountZero()
         {
             CustomList<int> testList = new CustomList<int>(4) { 3, 2, 3, 4 };
-            int[] expected = new int[] {};
+            int expected = 0;
 
-            int[] actual = testList.FindAll(1);
+            int actual = testList.FindAll(1).Count;
 
-            CollectionAssert.AreEqual(expected, actual);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

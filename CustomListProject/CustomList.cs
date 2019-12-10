@@ -13,7 +13,7 @@ namespace CustomListProject
         private int capacity;
         public T[] items;
 
-        public CustomList(int originalCapacity)
+        public CustomList(int originalCapacity = 4)
         {
             items = new T[originalCapacity];
             count = 0;
@@ -133,11 +133,12 @@ namespace CustomListProject
 
         public override string ToString()
         {
+            StringBuilder str = new StringBuilder("");
             string newString = "";
 
-            for(int i = 0; i < Count; i++)
+            for (int i = 0; i < Count; i++)
             {
-                newString = newString + items[i].ToString() + " ";
+                newString = str.Append(items[i]) + "";
             }
 
             return newString;
@@ -171,14 +172,16 @@ namespace CustomListProject
             return listOne;
         }
 
-        public void ZipLists(CustomList<T> listOne, CustomList<T> listTwo)
+        public void ZipLists(CustomList<T> listTwo)
         {
             T[] tempList;
+            int countOne = Count;
+            int countTwo = listTwo.Count;
 
-            if(listOne.capacity > listTwo.capacity)
+            if(capacity > listTwo.capacity)
             {
-                tempList = new T[listOne.capacity * 2];
-                capacity = listOne.Capacity * 2;
+                tempList = new T[capacity * 2];
+                capacity = Capacity * 2;
             }
             else
             {
@@ -190,9 +193,9 @@ namespace CustomListProject
             int k = 0;
             int j = 1;
 
-            while(i < listOne.Count && i < listTwo.Count)
+            while(i < Count && i < listTwo.Count)
             {
-                tempList[k] = listOne[i];
+                tempList[k] = items[i];
                 tempList[j] = listTwo[i];
 
                 i++;
@@ -200,12 +203,12 @@ namespace CustomListProject
                 j+=2;
             }
 
-            if(i < listOne.Count)
+            if(i < Count)
             {
-                while(i < listOne.Count)
+                while(i < Count)
                 {
                     j--;
-                    tempList[j] = listOne[i];
+                    tempList[j] = items[i];
 
                     i++;
                     j++;
@@ -224,32 +227,23 @@ namespace CustomListProject
             }
 
             items = tempList;
-            count = listOne.Count + listTwo.Count;
+            count = Count + listTwo.Count;
         }
 
-        public T[] FindAll(T item)
+        public CustomList<T> FindAll(T item)
         {
             int j = 0;
-            T[] tempList = new T[capacity];
-            T[] listToReturn;
+            CustomList<T> tempList = new CustomList<T>();
 
             for (int i = 0; i < Count; i++)
             {
                 if (EqualityComparer<T>.Default.Equals(items[i], item))
                 {
-                    tempList[j] = items[i];
-                    j++;
+                    tempList.Add(items[i]);
                 }
             }
 
-            listToReturn = new T[j];
-
-            for(int i = 0; i < j; i++)
-            {
-                listToReturn[i] = tempList[i];
-            }
-
-            return listToReturn;
+            return tempList;
         }
 
         public IEnumerator GetEnumerator()
