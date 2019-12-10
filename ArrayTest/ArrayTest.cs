@@ -140,14 +140,13 @@ namespace ArrayTest
         }
 
         [TestMethod]
-        public void Remove_RemoveItemFromList_DoesNotContainThree()
+        public void Remove_RemoveItemFromList_DoesNotContainRemovedItem()
         {
             CustomList<int> testList = new CustomList<int>(4) { 3, 2, 1, 4 };
             int expected = 2;
-            int actual;
 
             testList.Remove(3);
-            actual = testList[0];
+            int actual = testList[0];
 
             Assert.AreEqual(expected, actual);
         }
@@ -156,11 +155,10 @@ namespace ArrayTest
         public void Remove_RemoveItemFromList_MovesEntriesDownSoThereAreNoGaps()
         {
             CustomList<int> testList = new CustomList<int>(4) { 3, 2, 1, 4 };
-            int expected = 10;
-            int actual;
+            string expected = "3 1 4 ";
 
-            testList.Remove(20);
-            actual = testList[0] + testList[1] + testList[2] + testList[3];
+            testList.Remove(2);
+            string actual = testList.ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -177,6 +175,66 @@ namespace ArrayTest
             Assert.AreEqual(expected, actual);
         }
 
+        // RemoveAt Method Tests
+        [TestMethod]
+        public void RemoveAt_RemoveItemAtIndexOutsideOfRangeFromList_NothingWillBeRemoved()
+        {
+            CustomList<int> testList = new CustomList<int>(4) { 1, 2, 3, 4 };
+            string expected = "1 2 3 4 ";
+
+            testList.RemoveAt(4);
+            string actual = testList.ToString();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void RemoveAt_RemoveItemAtIndexOutsideOfRangeFromList_CountDoesNotChange()
+        {
+            CustomList<int> testList = new CustomList<int>(4) { 1, 2, 3, 4 };
+            int expected = 4;
+
+            testList.RemoveAt(4);
+            int actual = testList.Count;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void RemoveAt_RemoveItemAtIndexFromList_RemoveOnlyItemAtIndex()
+        {
+            CustomList<int> testList = new CustomList<int>(4) { 1, 2, 3, 4 };
+            string expected = "1 2 4 ";
+
+            testList.RemoveAt(2);
+            string actual = testList.ToString();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void RemoveAt_RemoveItemAtIndexFromList_CountDecreasesByOne()
+        {
+            CustomList<int> testList = new CustomList<int>(4) { 1, 2, 3, 4 };
+            int expected = 3;
+
+            testList.RemoveAt(2);
+            int actual = testList.Count;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void RemoveAt_RemoveItemAtIndexFromList_CapacityDoesNotChange()
+        {
+            CustomList<int> testList = new CustomList<int>(4) { 1, 2, 3, 4 };
+            int expected = 4;
+
+            testList.RemoveAt(2);
+            int actual = testList.Capacity;
+
+            Assert.AreEqual(expected, actual);
+        }
 
         // ToString Override Method Tests
         [TestMethod]
@@ -429,6 +487,29 @@ namespace ArrayTest
             string actual = finalList.ToString();
 
             Assert.AreEqual(expected, actual);
+        }
+
+        // FindAll Method Tests
+        [TestMethod]
+        public void FindAll_SearchForSpecifiedItem_ReturnsArrayOfMatchingItems()
+        {
+            CustomList<int> testList = new CustomList<int>(4) { 3, 2, 3, 4};
+            int[] expected = new int[] { 3, 3};
+
+            int[] actual = testList.FindAll(3);
+
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void FindAll_SearchForSpecifiedItem_ReturnsEmptyArray()
+        {
+            CustomList<int> testList = new CustomList<int>(4) { 3, 2, 3, 4 };
+            int[] expected = new int[] {};
+
+            int[] actual = testList.FindAll(1);
+
+            CollectionAssert.AreEqual(expected, actual);
         }
     }
 }

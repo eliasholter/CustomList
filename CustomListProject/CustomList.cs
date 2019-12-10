@@ -104,6 +104,33 @@ namespace CustomListProject
             return itemFound;
         }
 
+        public void RemoveAt(int index)
+        {
+            int j = 0;
+            bool itemRemoved = false;
+            T[] tempList = new T[capacity];
+            
+            for(int i = 0; i < Count; i++)
+            {
+                if(index == i)
+                {
+                    itemRemoved = true;
+                }
+                else
+                {
+                    tempList[j] = items[i];
+                    j++;
+                }
+            }
+
+            if(itemRemoved == true)
+            {
+                count -= 1;
+            }
+
+            items = tempList;
+        }
+
         public override string ToString()
         {
             string newString = "";
@@ -198,6 +225,31 @@ namespace CustomListProject
 
             items = tempList;
             count = listOne.Count + listTwo.Count;
+        }
+
+        public T[] FindAll(T item)
+        {
+            int j = 0;
+            T[] tempList = new T[capacity];
+            T[] listToReturn;
+
+            for (int i = 0; i < Count; i++)
+            {
+                if (EqualityComparer<T>.Default.Equals(items[i], item))
+                {
+                    tempList[j] = items[i];
+                    j++;
+                }
+            }
+
+            listToReturn = new T[j];
+
+            for(int i = 0; i < j; i++)
+            {
+                listToReturn[i] = tempList[i];
+            }
+
+            return listToReturn;
         }
 
         public IEnumerator GetEnumerator()
