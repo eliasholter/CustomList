@@ -48,7 +48,7 @@ namespace CustomListProject
             }
         }
 
-        public void AddItem(T item)
+        public void Add(T item)
         {
             if(Count >= Capacity)
             {
@@ -75,7 +75,7 @@ namespace CustomListProject
             items = tempList;
         }
 
-        public bool RemoveItem(T item)
+        public bool Remove(T item)
         {
             int j = 0;
             bool itemFound = false;
@@ -83,7 +83,7 @@ namespace CustomListProject
 
             for(int i = 0; i < Count; i++)
             {
-                if(!EqualityComparer<T>.Default.Equals(items[i], item))
+                if(!EqualityComparer<T>.Default.Equals(items[i], item) || itemFound == true)
                 {
                     tempList[j] = items[i];
                     j++;
@@ -122,11 +122,11 @@ namespace CustomListProject
 
             for (int i = 0; i < listOne.Count; i++)
             {
-                tempList.AddItem(listOne[i]);
+                tempList.Add(listOne[i]);
             }
             for (int j = 0; j < listTwo.Count; j++)
             {
-                tempList.AddItem(listTwo[j]);
+                tempList.Add(listTwo[j]);
             }
 
 
@@ -138,7 +138,7 @@ namespace CustomListProject
 
             for(int i = 0; i < listTwo.Count; i++)
             {
-               listOne.RemoveItem(listTwo[i]);
+               listOne.Remove(listTwo[i]);
             }
 
             return listOne;
@@ -177,18 +177,22 @@ namespace CustomListProject
             {
                 while(i < listOne.Count)
                 {
-                    tempList[i] = listOne[i];
+                    j--;
+                    tempList[j] = listOne[i];
 
                     i++;
+                    j++;
                 }
             }
             else if(i < listTwo.Count)
             {
+                j--;
                 while(i < listTwo.Count)
                 {
-                    tempList[i] = listTwo[i];
+                    tempList[j] = listTwo[i];
 
                     i++;
+                    j++;
                 }
             }
 

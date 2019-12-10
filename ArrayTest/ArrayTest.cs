@@ -18,6 +18,15 @@ namespace ArrayTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void Indexer_NegativeIndexRequested_ExceptionThrown()
+        {
+            CustomList<int> testList = new CustomList<int>(4);
+
+            int indexToCheck = testList[-1];
+        }
+
+        [TestMethod]
         public void Indexer_CheckIndex_ReturnsValueThatWasRequested()
         {
             CustomList<int> testList = new CustomList<int>(4);
@@ -39,7 +48,7 @@ namespace ArrayTest
             int expected = 1;
             int actual;
 
-            testList.AddItem(newListItem);
+            testList.Add(newListItem);
             actual = testList.Count;
             Assert.AreEqual(expected, actual);
         }
@@ -52,11 +61,11 @@ namespace ArrayTest
             int expected = 5;
             int actual;
             
-            testList.AddItem(newListItem);
-            testList.AddItem(newListItem);
-            testList.AddItem(newListItem);
-            testList.AddItem(newListItem);
-            testList.AddItem(newListItem);
+            testList.Add(newListItem);
+            testList.Add(newListItem);
+            testList.Add(newListItem);
+            testList.Add(newListItem);
+            testList.Add(newListItem);
             actual = testList.Count;
 
             Assert.AreEqual(expected, actual);
@@ -66,19 +75,14 @@ namespace ArrayTest
         public void Add_AddItemToListWithNoMoreCapacity_MaintainsOriginalListOrder()
         {
             CustomList<int> testList = new CustomList<int>(4);
-            int itemOne = 1;
-            int itemTwo = 2;
-            int itemThree = 3;
-            int itemFour = 4;
-            int itemFive = 5;
-            int expected = 5;
+            string expected = "1 2 3 4 5 ";
 
-            testList.AddItem(itemOne);
-            testList.AddItem(itemTwo);
-            testList.AddItem(itemThree);
-            testList.AddItem(itemFour);
-            testList.AddItem(itemFive);
-            int actual = testList.Count;
+            testList.Add(1);
+            testList.Add(2);
+            testList.Add(3);
+            testList.Add(4);
+            testList.Add(5);
+            string actual = testList.ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -92,7 +96,7 @@ namespace ArrayTest
 
             for (int i = 0; i < 6; i++)
             {
-                testList.AddItem(newListItem);
+                testList.Add(newListItem);
             }
             int actual = testList.Capacity;
 
@@ -113,14 +117,24 @@ namespace ArrayTest
         [TestMethod]
         public void Remove_RemoveItemFromList_CountDecreases()
         {
-            CustomList<int> testList = new CustomList<int>(4);
+            CustomList<int> testList = new CustomList<int>(4) { 3, 2 };
             int expected = 1;
             int actual;
 
-            testList.AddItem(3);
-            testList.AddItem(2);
-            testList.RemoveItem(3);
+            testList.Remove(3);
             actual = testList.Count;
+
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void Remove_RemoveItemFromList_RetainsPreviousCapacity()
+        {
+            CustomList<int> testList = new CustomList<int>(4) { 3, 2 };
+            int expected = 4;
+            int actual;
+
+            testList.Remove(3);
+            actual = testList.Capacity;
 
             Assert.AreEqual(expected, actual);
         }
@@ -128,16 +142,12 @@ namespace ArrayTest
         [TestMethod]
         public void Remove_RemoveItemFromList_DoesNotContainThree()
         {
-            CustomList<int> testList = new CustomList<int>(4);
-            int expected = 4;
+            CustomList<int> testList = new CustomList<int>(4) { 3, 2, 1, 4 };
+            int expected = 2;
             int actual;
 
-            testList.AddItem(3);
-            testList.AddItem(2);
-            testList.AddItem(1);
-            testList.AddItem(4);
-            testList.RemoveItem(3);
-            actual = testList[2];
+            testList.Remove(3);
+            actual = testList[0];
 
             Assert.AreEqual(expected, actual);
         }
@@ -145,32 +155,34 @@ namespace ArrayTest
         [TestMethod]
         public void Remove_RemoveItemFromList_MovesEntriesDownSoThereAreNoGaps()
         {
-            CustomList<int> testList = new CustomList<int>(4);
+            CustomList<int> testList = new CustomList<int>(4) { 3, 2, 1, 4 };
             int expected = 10;
             int actual;
 
-            testList.AddItem(3);
-            testList.AddItem(2);
-            testList.AddItem(1);
-            testList.AddItem(4);
-            testList.RemoveItem(20);
+            testList.Remove(20);
             actual = testList[0] + testList[1] + testList[2] + testList[3];
 
             Assert.AreEqual(expected, actual);
         }
 
+        [TestMethod]
+        public void Remove_RemoveItemFromList_DoesNotRemoveAnything()
+        {
+            CustomList<int> testList = new CustomList<int>(4) { 1, 2, 3, 4 };
+            string expected = "1 2 3 4 ";
 
+            testList.Remove(5);
+            string actual = testList.ToString();
+
+            Assert.AreEqual(expected, actual);
+        }
 
 
         // ToString Override Method Tests
         [TestMethod]
         public void ToString_ConvertsIntegerArrayToString_ContainsEntireList()
         {
-            CustomList<int> testList = new CustomList<int>(4);
-            testList.AddItem(1);
-            testList.AddItem(2);
-            testList.AddItem(3);
-            testList.AddItem(4);
+            CustomList<int> testList = new CustomList<int>(4) { 1, 2, 3, 4 };
             string expected = "1 2 3 4 ";
            
             string actual = testList.ToString();
@@ -181,11 +193,7 @@ namespace ArrayTest
         [TestMethod]
         public void ToString_ConvertsDoubleArrayToString_ContainsEntireList()
         {
-            CustomList<double> testList = new CustomList<double>(4);
-            testList.AddItem(.25);
-            testList.AddItem(.5);
-            testList.AddItem(.75);
-            testList.AddItem(.99);
+            CustomList<double> testList = new CustomList<double>(4) { .25, .5, .75, .99 };
             string expected = "0.25 0.5 0.75 0.99 ";
 
             string actual = testList.ToString();
@@ -196,11 +204,7 @@ namespace ArrayTest
         [TestMethod]
         public void ToString_ConvertsBooleanArrayToString_ContainsEntireList()
         {
-            CustomList<bool> testList = new CustomList<bool>(4);
-            testList.AddItem(true);
-            testList.AddItem(false);
-            testList.AddItem(true);
-            testList.AddItem(false);
+            CustomList<bool> testList = new CustomList<bool>(4) { true, false, true, false };
             string expected = "True False True False ";
 
             string actual = testList.ToString();
@@ -211,11 +215,7 @@ namespace ArrayTest
         [TestMethod]
         public void ToString_ConvertsByteArrayToString_ContainsEntireList()
         {
-            CustomList<byte> testList = new CustomList<byte>(4);
-            testList.AddItem(25);
-            testList.AddItem(40);
-            testList.AddItem(60);
-            testList.AddItem(254);
+            CustomList<byte> testList = new CustomList<byte>(4) { 25, 40, 60, 254 };
             string expected = "25 40 60 254 ";
 
             string actual = testList.ToString();
@@ -226,12 +226,19 @@ namespace ArrayTest
         [TestMethod]
         public void ToString_ConvertsCharArrayToString_ContainsEntireList()
         {
-            CustomList<char> testList = new CustomList<char>(4);
-            testList.AddItem('a');
-            testList.AddItem('b');
-            testList.AddItem('c');
-            testList.AddItem('d');
+            CustomList<char> testList = new CustomList<char>(4) { 'a', 'b', 'c', 'd' };
             string expected = "a b c d ";
+
+            string actual = testList.ToString();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ToString_ConvertsEmptyArrayToString_ReturnsEmptyString()
+        {
+            CustomList<int> testList = new CustomList<int>(4);
+            string expected = "";
 
             string actual = testList.ToString();
 
@@ -242,15 +249,9 @@ namespace ArrayTest
         [TestMethod]
         public void OverridePlusOperator_AddListsTogether_CountEqualsSumOfTwoPreviousListCounts()
         {
-            CustomList<int> testListOne = new CustomList<int>(4);
-            CustomList<int> testListTwo = new CustomList<int>(4);
+            CustomList<int> testListOne = new CustomList<int>(4) { 1, 3, 5 };
+            CustomList<int> testListTwo = new CustomList<int>(4) { 2, 4, 6 };
             CustomList<int> finalList = new CustomList<int>(4);
-            testListOne.AddItem(1);
-            testListOne.AddItem(3);
-            testListOne.AddItem(5);
-            testListTwo.AddItem(2);
-            testListTwo.AddItem(4);
-            testListTwo.AddItem(6);
             int expected = 6;
 
             finalList = testListOne + testListTwo;
@@ -262,17 +263,9 @@ namespace ArrayTest
         [TestMethod]
         public void OverridePlusOperator_AddListsTogether_FinalListIsInOrder()
         {
-            CustomList<int> testListOne = new CustomList<int>(4);
-            CustomList<int> testListTwo = new CustomList<int>(4);
+            CustomList<int> testListOne = new CustomList<int>(4) { 1, 3, 5, 7 };
+            CustomList<int> testListTwo = new CustomList<int>(4) { 2, 4, 6, 8 };
             CustomList<int> finalList = new CustomList<int>(4);
-            testListOne.AddItem(1);
-            testListOne.AddItem(3);
-            testListOne.AddItem(5);
-            testListTwo.AddItem(2);
-            testListTwo.AddItem(4);
-            testListTwo.AddItem(6);
-            testListOne.AddItem(7);
-            testListTwo.AddItem(8);
             string expected = "1 3 5 7 2 4 6 8 ";
 
             finalList = testListOne + testListTwo;
@@ -284,16 +277,9 @@ namespace ArrayTest
         [TestMethod]
         public void OverridePlusOperator_AddTwoDifferentSizeListsTogether_CapacityOfNewListIsDoubleTheCapacityOfTheLargerList()
         {
-            CustomList<int> testListOne = new CustomList<int>(4);
-            CustomList<int> testListTwo = new CustomList<int>(4);
+            CustomList<int> testListOne = new CustomList<int>(4) { 1, 3, 5 };
+            CustomList<int> testListTwo = new CustomList<int>(4) { 2, 4, 6, 9 };
             CustomList<int> finalList = new CustomList<int>(4);
-            testListOne.AddItem(1);
-            testListOne.AddItem(3);
-            testListOne.AddItem(5);
-            testListTwo.AddItem(2);
-            testListTwo.AddItem(4);
-            testListTwo.AddItem(6);
-            testListTwo.AddItem(9);
             int expected = testListTwo.Capacity * 2;
 
             finalList = testListOne + testListTwo;
@@ -306,15 +292,9 @@ namespace ArrayTest
        [TestMethod]
         public void OverrideSubtractionOperator_SubtractOneListFromAnother_CountEqualsOriginalCountMinusNumberOfItemsRemoved()
         {
-            CustomList<int> testListOne = new CustomList<int>(4);
-            CustomList<int> testListTwo = new CustomList<int>(4);
+            CustomList<int> testListOne = new CustomList<int>(4) { 1, 3, 5 };
+            CustomList<int> testListTwo = new CustomList<int>(4) { 2, 3, 6 };
             CustomList<int> finalList = new CustomList<int>(4);
-            testListOne.AddItem(1);
-            testListOne.AddItem(3);
-            testListOne.AddItem(5);
-            testListTwo.AddItem(2);
-            testListTwo.AddItem(3);
-            testListTwo.AddItem(6);
             int expected = 2;
 
             finalList = testListOne - testListTwo;
@@ -326,17 +306,9 @@ namespace ArrayTest
         [TestMethod]
         public void OverrideSubtractionOperator_SubtractOneListFromAnother_FinalListIsInOrder()
         {
-            CustomList<int> testListOne = new CustomList<int>(4);
-            CustomList<int> testListTwo = new CustomList<int>(4);
+            CustomList<int> testListOne = new CustomList<int>(4) { 1, 3, 5, 7 };
+            CustomList<int> testListTwo = new CustomList<int>(4) { 2, 1, 3, 5 };
             CustomList<int> finalList = new CustomList<int>(4);
-            testListOne.AddItem(1);
-            testListOne.AddItem(3);
-            testListOne.AddItem(5);
-            testListTwo.AddItem(2);
-            testListTwo.AddItem(1);
-            testListTwo.AddItem(3);
-            testListOne.AddItem(7);
-            testListTwo.AddItem(5);
             string expected = "7 ";
 
             finalList = testListOne - testListTwo;
@@ -345,8 +317,33 @@ namespace ArrayTest
             Assert.AreEqual(expected, actual);
         }
 
-        //[TestMethod]
-        //public void OverrideSubtractionOperator_SubtractOneListFromAnotherWithDuplicatesInTheData_
+        [TestMethod]
+        public void OverrideSubtractionOperator_SubtractOneListFromAnotherWithNoCommonTerms_DoesNotSubtractAnything()
+        {
+            CustomList<int> testListOne = new CustomList<int>(4) { 1, 3, 5 };
+            CustomList<int> testListTwo = new CustomList<int>(4) { 2, 4, 6 };
+            CustomList<int> finalList = new CustomList<int>(4);
+            string expected = "1 3 5 ";
+
+            finalList = testListOne - testListTwo;
+            string actual = finalList.ToString();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void OverrideSubtractionOperator_SubtractOneListFromAnother_OnlyRemoveOneInstanceOfItemInFirstListForEachInstanceInTheSecondList()
+        {
+            CustomList<int> testListOne = new CustomList<int>(4) { 1, 3, 1, 7 };
+            CustomList<int> testListTwo = new CustomList<int>(4) { 2, 1, 3, 5 };
+            CustomList<int> finalList = new CustomList<int>(4);
+            string expected = "1 7 ";
+
+            finalList = testListOne - testListTwo;
+            string actual = finalList.ToString();
+
+            Assert.AreEqual(expected, actual);
+        }
 
         // Zip Method Tests
         [TestMethod]
@@ -355,12 +352,12 @@ namespace ArrayTest
             CustomList<int> testListOne = new CustomList<int>(4);
             CustomList<int> testListTwo = new CustomList<int>(4);
             CustomList<int> finalList = new CustomList<int>(4);
-            testListOne.AddItem(1);
-            testListOne.AddItem(3);
-            testListOne.AddItem(5);
-            testListTwo.AddItem(2);
-            testListTwo.AddItem(4);
-            testListTwo.AddItem(6);
+            testListOne.Add(1);
+            testListOne.Add(3);
+            testListOne.Add(5);
+            testListTwo.Add(2);
+            testListTwo.Add(4);
+            testListTwo.Add(6);
             int expected = 6;
 
             finalList.ZipLists(testListOne, testListTwo);
@@ -376,12 +373,12 @@ namespace ArrayTest
             CustomList<int> testListTwo = new CustomList<int>(4);
             CustomList<int> finalList = new CustomList<int>(4);
             string expected = "1 2 3 4 5 6 ";
-            testListOne.AddItem(1);
-            testListOne.AddItem(3);
-            testListOne.AddItem(5);
-            testListTwo.AddItem(2);
-            testListTwo.AddItem(4);
-            testListTwo.AddItem(6);
+            testListOne.Add(1);
+            testListOne.Add(3);
+            testListOne.Add(5);
+            testListTwo.Add(2);
+            testListTwo.Add(4);
+            testListTwo.Add(6);
 
             finalList.ZipLists(testListOne, testListTwo);
 
@@ -396,17 +393,40 @@ namespace ArrayTest
             CustomList<int> testListOne = new CustomList<int>(4);
             CustomList<int> testListTwo = new CustomList<int>(4);
             CustomList<int> finalList = new CustomList<int>(4);
-            testListOne.AddItem(1);
-            testListOne.AddItem(3);
-            testListOne.AddItem(5);
-            testListTwo.AddItem(2);
-            testListTwo.AddItem(4);
-            testListTwo.AddItem(6);
-            testListTwo.AddItem(9);
+            testListOne.Add(1);
+            testListOne.Add(3);
+            testListOne.Add(5);
+            testListTwo.Add(2);
+            testListTwo.Add(4);
+            testListTwo.Add(6);
+            testListTwo.Add(9);
             int expected = testListTwo.Capacity*2;
 
             finalList.ZipLists(testListOne, testListTwo);
             int actual = finalList.Capacity;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ZipLists_ZipTwoDifferentSizeListsTogether_AfterTheEndOfSmallerListStillAddsTheRestOfLargerList()
+        {
+            CustomList<int> testListOne = new CustomList<int>(4);
+            CustomList<int> testListTwo = new CustomList<int>(4);
+            CustomList<int> finalList = new CustomList<int>(4);
+            testListOne.Add(1);
+            testListOne.Add(3);
+            testListOne.Add(5);
+            testListTwo.Add(2);
+            testListTwo.Add(4);
+            testListTwo.Add(6);
+            testListTwo.Add(9);
+            testListTwo.Add(69);
+            testListTwo.Add(101);
+            string expected = "1 2 3 4 5 6 9 69 101 ";
+
+            finalList.ZipLists(testListOne, testListTwo);
+            string actual = finalList.ToString();
 
             Assert.AreEqual(expected, actual);
         }

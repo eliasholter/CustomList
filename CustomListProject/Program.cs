@@ -10,20 +10,21 @@ namespace CustomListProject
     {
         static void Main(string[] args)
         {
-            CustomList<int> list = new CustomList<int>(4);
+            CustomList<int> listOne = new CustomList<int>(4);
+            CustomList<int> listTwo = new CustomList<int>(4);
+            CustomList<int> newList;
+            CustomList<int> list = new CustomList<int>(4) { 1, 2, 3, 4 };
 
-            list.AddItem(0);
-            list.AddItem(1);
-            list.AddItem(2);
-            list.AddItem(3);
-            list.AddItem(4);
+            listOne.Add(1);
+            listOne.Add(3);
+            listOne.Add(5);
+            listTwo.Add(2);
+            listTwo.Add(3);
+            listTwo.Add(6);
 
-            list.RemoveItem(3);
+            newList = listOne - listTwo;
 
-            foreach(int item in list)
-            {
-                Console.WriteLine(item);
-            }
+            Console.WriteLine(newList);
             Console.ReadLine();
         }
     }
